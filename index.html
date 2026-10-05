@@ -147,6 +147,7 @@
  .make-document-actions .make-search-again:hover{background:#f0f5fc}
  .make-document-preview-title{padding:1rem 1.25rem;color:#17365d;font-weight:700}
  .make-document-frame{display:block;width:100%;height:78vh;min-height:560px;border:0;border-top:1px solid #e7ebef;background:#eef1f4}
+ .make-captcha-note{margin:.5rem auto;padding:.75rem 1rem;border:1px solid #e7c86a;border-radius:4px;background:#fff9e6;color:#57450b;text-align:left;font-size:.9rem}
  @media(max-width:767px){.make-document-grid{grid-template-columns:1fr}.make-document-result{margin:1rem auto}.make-document-frame{height:68vh;min-height:460px}}
 </style>
 <script>
@@ -160,6 +161,20 @@
 		const formPage = form?.closest('.container.py-3');
 
 		if (!form || !codeInput || !submitButton || !formPage) return;
+
+		const rutSection = document.getElementById('seccionRut');
+		if (rutSection) {
+			rutSection.style.display = '';
+			rutSection.innerHTML = '<div class="mb-2"><label class="form-label" for="rutPasaporte">RUT / Pasaporte</label><input type="text" id="rutPasaporte" name="rutPasaporte" class="form-control form-control-lg text-input" placeholder="Ej: 12.345.678-9" maxlength="20" autocomplete="off"></div>';
+		}
+
+		const captchaHost = form.querySelector('.captcha-message');
+		if (captchaHost) {
+			const captchaNotice = document.createElement('div');
+			captchaNotice.className = 'make-captcha-note';
+			captchaNotice.textContent = 'El reCAPTCHA oficial no está disponible en esta copia HTML local. La búsqueda del documento se realiza directamente con el código en Make.';
+			captchaHost.replaceChildren(captchaNotice);
+		}
 
 		let currentPdfUrl = '';
 		const status = document.createElement('div');
